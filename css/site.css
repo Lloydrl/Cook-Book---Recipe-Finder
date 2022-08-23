@@ -1,0 +1,94 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Noto Serif Display', serif;
+    color: rgb(25, 70, 87);
+    background-color: rgb(242, 245, 246);
+}
+
+header {
+    background-color: rgb(34, 93, 116);
+    color: white;
+    text-align: center;
+}
+
+main {
+    padding: .5em;
+}
+
+h1 {
+    font-family: 'Petit Formal Script', cursive;
+    text-shadow: 2px 2px 10px rgb(10, 32, 40);
+    font-size: 4em;
+    margin: 0;
+    padding: 1em;
+}
+
+.center {
+    text-align: center;
+    padding: .5em;
+}
+
+#btnRight {
+    text-align: right;
+    padding: .5em;
+    font-size: 1.2em;;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: auto 30%;
+    grid-template-rows: 20% auto;
+    grid-template-areas: 
+        "recipe-header none"
+        "recipe-main recipe-image";
+}
+
+.recipe-header {
+    grid-area: recipe-header;
+}
+
+.recipe-main {
+    grid-area: recipe-main;  
+}
+
+.recipe-image {
+    grid-area: recipe-image;
+}
+
+#app {
+    display: flex;
+}
+
+.main {
+    background-color: white;
+    width: 100vw;
+    height: auto;
+}
+
+#recipe-main {
+    display: flex;
+}
+
+img {
+    padding: 1em;
+    height: 300px;
+    width: 300px;
+}
+
+#btn {
+    text-align: center;
+}
+
+.fav-btn:focus {
+    color: rgb(15, 183, 0);
+}
+
+.fav-btn:visited {
+    color: rgb(15, 183, 0);
+}
