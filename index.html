@@ -12,24 +12,27 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">
-            <img src="https://cdn-icons-png.flaticon.com/512/1371/1371048.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            Cook Book Recipes
-            </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-            </li>
-            </ul>
-        </div>
-        <button class="btn btn-light" v-on:click="clickedButton">Favorite Recipes</button>
-    </nav>
-
     <div id="app">
+
+        <!-- NAVIGATION BAR -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://cdn-icons-png.flaticon.com/512/1371/1371048.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Cook Book Recipes
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <button class="btn btn-light" v-on:click="favorites = true">Favorite Recipes</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- SEARCH CARD -->
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">Recipe Search</h5>
@@ -57,10 +60,7 @@
             </div>
         </div>
 
-        <!-- <button class="btn btn-light" v-on:click="favorites = true">Favorite Recipes</button> -->
-        <!-- <button class="btn btn-light" v-on:click="clickedButton">Favorite Recipes</button> -->
-
-
+        <!-- LISTS RECIPES -->
         <div v-show="favorites === false">
             <div class="container">
                 <div class="row justify-content-center">
@@ -98,6 +98,7 @@
             </div>               
         </div>
 
+        <!-- FAVORITE RECIPIES -->
         <div v-show="favorites === true">
             <div class="container">
                 <div class="row justify-content-center">
