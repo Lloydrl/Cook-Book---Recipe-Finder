@@ -5,91 +5,134 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cook Book - Recipes</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display&family=Petit+Formal+Script&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-    <link rel="stylesheet" href="css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <h1>Cook Book Recipes</h1>
-    </header>
-    <main>
-        <div id="app">
-            <div class="center">
-                <h2><u>Recipe Search</u><h2><br>
-                <label for="foodkeyword-search">Search by keyword:</label><br>
-                <input type="text" id="foodkeyword-search" v-model = 'inputField'><br>
-                <label for="meal-type">Meal Type:</label><br>
-                <select id="meal-type" v-model = 'mealTypeSelect'>
-                    <option value="breakfast">Breakfast</option>
-                    <option value="brunch">Brunch</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="dinner">Dinner</option>
-                    <option value="snack">Snack</option>
-                    <option value="teatime">Teatime</option>
-                </select><br>
-                <button v-on:click="loadSearchedRecipes">Search</button>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://cdn-icons-png.flaticon.com/512/1371/1371048.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Cook Book Recipes
+            </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+            </li>
+            </ul>
+        </div>
+        <button class="btn btn-light" v-on:click="clickedButton">Favorite Recipes</button>
+    </nav>
+
+    <div id="app">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Recipe Search</h5>
+            <div class="card-text">
+                <div>
+                    <label for="foodkeyword-search">Search by keyword:</label>
+                    <input type="text" id="foodkeyword-search" v-model = 'inputField'>
+                </div>
+                <p>
+                    <label for="meal-type">Meal Type:</label>
+                    <select id="meal-type" v-model = 'mealTypeSelect'>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="brunch">Brunch</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="snack">Snack</option>
+                        <option value="teatime">Teatime</option>
+                    </select>
+                </p>
             </div>
-
-            <div class="main">  
-                <div id="btnRight">
-                    <button v-on:click="favorites = true">Favorite Recipes</button>
-                </div>
-
-                <div v-show="favorites === false">
-                    <ol>
-                        <li v-for="recipe in recipes.hits" :key="recipe.id">
-                            <h3 class="recipe-header"><u>{{ recipe.recipe.label }}</u></h3>
-                            <button class="fav-btn" v-on:click="favoriteRecipe(recipe)">♡ Favorite</button>
-                            <div id="recipe-main">
-                                <img :src="`${ recipe.recipe.image }`" class="recipe-image">
-                                <div>
-                                    <p v-for="item in recipe.recipe.mealType"><b>Meal Type:</b> {{ item }}</p>
-                                    <p v-for="item in recipe.recipe.cuisineType"><b>Cuisine Type:</b> {{ item }}</p>
-                                    <p><b>Calories:</b> {{ recipe.recipe.calories }}</p>
-                                    <h4>Ingredients:</h4>
-                                        <ul>
-                                            <li v-for="item in recipe.recipe.ingredientLines">
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                    <p>Recipe is from <u>{{ recipe.recipe.source }}</u></p>
-                                    <p><a :href="`${ recipe.recipe.shareAs }`">Instructions: {{ recipe.recipe.label }}</a></p>
-                                </div>
-                            </div>
-                        </li>                 
-                    </ol>
-                </div>
-
-                <div v-show="favorites === true">
-                    <ol>
-                        <li v-for="recipe in favRecipes" :key="recipe.id">
-                            <h3 class="recipe-header"><u>{{ recipe.recipe.label }}</u></h3>
-                            <button v-on:click="unfavoriteRecipe(recipe)">Unfavorite</button>
-                            <div id="recipe-main">
-                                <img :src="`${ recipe.recipe.image }`" class="recipe-image">
-                                <div>
-                                    <p v-for="item in recipe.recipe.mealType"><b>Meal Type:</b> {{ item }}</p>
-                                    <p v-for="item in recipe.recipe.cuisineType"><b>Cuisine Type:</b> {{ item }}</p>
-                                    <p><b>Calories:</b> {{ recipe.recipe.calories }}</p>
-                                    <h4>Ingredients:</h4>
-                                        <ul>
-                                            <li v-for="item in recipe.recipe.ingredientLines">
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                    <p>Recipe is from <u>{{ recipe.recipe.source }}</u></p>
-                                    <p><a :href="`${ recipe.recipe.shareAs }`">Instructions: {{ recipe.recipe.label }}</a></p>
-                                </div>
-                            </div>
-                        </li>                 
-                    </ol>
-                </div>
+            <button class="btn btn-primary" v-on:click="loadSearchedRecipes">Search</button>
+            </div>
+            <div class="card-footer text-muted">
+                Want to save a recipe for later? Click on the green heart to add it to your favorites list!
             </div>
         </div>
-    </main>
+
+        <!-- <button class="btn btn-light" v-on:click="favorites = true">Favorite Recipes</button> -->
+        <!-- <button class="btn btn-light" v-on:click="clickedButton">Favorite Recipes</button> -->
+
+
+        <div v-show="favorites === false">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div v-for="recipe in recipes.hits" :key="recipe.id">
+                        <div class="col-sm-4 pt-5">
+                            <div class="card" style="width: 25rem;">
+                                <img class="card-img-top" :src="`${ recipe.recipe.image }`" alt="Card image cap">
+                                <div>
+                                    <button class="btn btn-light btn-outline-success" v-on:click="favoriteRecipe(recipe)" style="width:25rem;">♡</button>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">{{ recipe.recipe.label }}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item" v-for="item in recipe.recipe.mealType"><b>Meal Type:</b> {{ item }}</li>
+                                <li class="list-group-item" v-for="item in recipe.recipe.cuisineType"><b>Cuisine Type:</b> {{ item }}</li>
+                                <li class="list-group-item"><b>Calories:</b> {{ recipe.recipe.calories }}</li>
+                                <li class="list-group-item">
+                                    <h5 class="text-center">Ingredients</h5>
+                                    <ul>
+                                        <li v-for="item in recipe.recipe.ingredientLines">
+                                            {{ item }}
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="list-group-item">Recipe is from <u>{{ recipe.recipe.source }}</u></li>
+                                </ul>
+                                <div class="card-body">
+                                <a :href="`${ recipe.recipe.shareAs }`" class="card-link" target="blank">Instructions: {{ recipe.recipe.label }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>               
+        </div>
+
+        <div v-show="favorites === true">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div v-for="recipe in favRecipes" :key="recipe.id">
+                        <div class="col-sm-4 pt-3">
+                            <div class="card" style="width: 25rem;">
+                                <img class="card-img-top" :src="`${ recipe.recipe.image }`" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">{{ recipe.recipe.label }}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item" v-for="item in recipe.recipe.mealType"><b>Meal Type:</b> {{ item }}</li>
+                                <li class="list-group-item" v-for="item in recipe.recipe.cuisineType"><b>Cuisine Type:</b> {{ item }}</li>
+                                <li class="list-group-item"><b>Calories:</b> {{ recipe.recipe.calories }}</li>
+                                <li class="list-group-item">
+                                    <h5 class="text-center">Ingredients</h5>
+                                    <ul>
+                                        <li v-for="item in recipe.recipe.ingredientLines">
+                                            {{ item }}
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="list-group-item">Recipe is from <u>{{ recipe.recipe.source }}</u></li>
+                                </ul>
+                                <div class="card-body">
+                                <a :href="`${ recipe.recipe.shareAs }`" class="card-link" target="blank">Instructions: {{ recipe.recipe.label }}</a>
+                                </div>
+                                <button class="btn btn-light btn-outline-danger" v-on:click="unfavoriteRecipe(recipe)" style="width:25rem;">Unfavorite</button>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>               
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/app.js"></script>

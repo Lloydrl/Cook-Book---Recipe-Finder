@@ -33,8 +33,13 @@ new Vue({
         favoriteRecipe: function(recipe) {
             this.favRecipes.push(recipe)
         },
+
         unfavoriteRecipe: function(recipe) {
             this.favRecipes.splice(this.favRecipes.indexOf(recipe), 1)
+        },
+
+        clickedButton: function() {
+            console.log('clicked')
         }
-    }
+    },
 })
