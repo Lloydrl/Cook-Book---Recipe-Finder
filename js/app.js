@@ -7,6 +7,7 @@ new Vue({
         nextPage: "",
         favRecipes: [],
         favorites: false,
+        dailyRecipe: [],
     },
     methods: {
         loadSearchedRecipes: function() {
@@ -37,9 +38,5 @@ new Vue({
         unfavoriteRecipe: function(recipe) {
             this.favRecipes.splice(this.favRecipes.indexOf(recipe), 1)
         },
-
-        clickedButton: function() {
-            console.log('clicked')
-        }
     },
 })
